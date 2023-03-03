@@ -1,7 +1,5 @@
 package mitchell.project.software_1;
-/**This is class file for the Controller for the modify product page of the inventory application.
- * @author Mitchell Lantz
- */
+
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +18,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+/**This is class file for the Controller for the modify product page of the inventory application.
+ * @author Mitchell Lantz
+ */
 
 public class ModifyProductController implements Initializable {
     public TextField modProdIDField;
@@ -83,10 +84,9 @@ public class ModifyProductController implements Initializable {
 
     }
 
-    /**
+    /**This method is called when the add button is pressed in the associated parts table area. It adds the part that is selected in the {@link ModifyProductController#modProductPartsTable} array table to the {@link ModifyProductController#modProductAssociatedPartsTable} array.
      *
      * @param actionEvent
-     * 
      */
     public void onAddB(ActionEvent actionEvent) {
 
@@ -104,9 +104,11 @@ public class ModifyProductController implements Initializable {
             productData.addAssociatedPart(productData, selectedPart);
         }
 
-
     }
-
+    /**
+     * This method is called when the delete button is pressed in the associated parts table area. It will remove the associated part from the associated parts array that is displayed it uses the deleteAssociatedPart method from the  {@link Product} class.
+     * @param actionEvent
+     */
     public void onRemoveAssociatedPartButton (ActionEvent actionEvent){
         Part selectedPart= (Part) modProductAssociatedPartsTable.getSelectionModel().getSelectedItem();
         if (selectedPart == null) {
@@ -124,7 +126,13 @@ public class ModifyProductController implements Initializable {
 
     }
 
-
+    /** This is the save method that is invoked when the save button is pressed. It will modify the product in the all Products static Observable list Array located in the Inventory Class
+     * All fields are data validated and will not allow the user to save empty fields or fields filled in with the incorrect data type.
+     * Product ID is auto generated and cannot be modified.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
         String productIdS = modProdIDField.getText();
         String productNameS = modProdNameField.getText();
@@ -261,7 +269,11 @@ public class ModifyProductController implements Initializable {
     }
 
 
-
+    /**
+     * This is the method to return back to the main Inventory page of the application. A warning is presented before the user can go back. This method is re-used several times in the program.
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -283,8 +295,10 @@ public class ModifyProductController implements Initializable {
         
 
     }
-
-
+    /** This is the Method for the search product search text field. It uses {@link Inventory#searchByProductName(String)} as well as {@link Inventory#searchByProductID(int)} method located in the Inventory Class.
+     *
+     * @param actionEvent
+     */
     public void searchPart(ActionEvent actionEvent) {
         String q = modProductPartSearch.getText();
         ObservableList<Part> productQuery = Inventory.searchByPartName(q);

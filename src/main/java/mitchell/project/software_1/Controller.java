@@ -1,7 +1,5 @@
 package mitchell.project.software_1;
-/**This is the class file for the main controller for the inventory program
- * @author Mitchell Lantz
- */
+
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -27,7 +25,9 @@ import java.util.ResourceBundle;
 
 
 
-
+/**This is the class file for the main controller for the inventory program
+ * @author Mitchell Lantz
+ */
 public class Controller implements Initializable {
 
 
@@ -74,7 +74,11 @@ public class Controller implements Initializable {
     @FXML
     public Button productSearch;
 
-
+    /**This is the initialize method, used to build the tables of the main Inventory view of the inventory application.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         mainList.setItems(Inventory.getAllParts());
@@ -92,7 +96,11 @@ public class Controller implements Initializable {
 
     }
 
-
+    /**This a method for a navigation feature, it takes the user to the Add a Part page controlled by the {@link AddPartController}.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAddPartPage(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addPartPage.fxml")));
         Scene addPartScene = new Scene(root);
@@ -102,6 +110,11 @@ public class Controller implements Initializable {
         stage.show();
 
     }
+
+    /** This is a method for a navigation feature, it takes the user to the Add a Part Page controlled by the {@link AddProductController}.
+     * @param actionEvent
+     * @throws IOException
+     */
 
     public void toAddProductPage(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addProductPage.fxml")));
@@ -113,6 +126,11 @@ public class Controller implements Initializable {
 
     }
 
+    /** This is a method for a navigation feature, it takes the user to the Modify Part Page controlled by the {@link ModifyPartController}.
+     * It will not load the next page unless a part is selected.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toModifyPartPage(ActionEvent actionEvent) throws IOException {
         Part selectedPart = (Part) mainList.getSelectionModel().getSelectedItem();
 
@@ -135,6 +153,12 @@ public class Controller implements Initializable {
 
     }
 
+    /** This is a method for a navigation feature, it takes the user to the Modify Product Page controlled by the {@link ModifyProductController}.
+     * It will not load the next page unless a product is selected.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toModifyProductPage(ActionEvent actionEvent) throws IOException {
         Product selectedProduct = (Product) prodMainView.getSelectionModel().getSelectedItem();
 
@@ -157,7 +181,10 @@ public class Controller implements Initializable {
 
     }
 
-
+    /**
+     * This is the Method for the searh parts search text field. It uses {@link Inventory#searchByPartName(String)} as well as {@link Inventory#searchByPartID(int)} method located in the Inventory Class.
+     * @param actionEvent
+     */
     public void searchParts(ActionEvent actionEvent) {
         String q = partSearchBar.getText();
         ObservableList<Part> productQuery = Inventory.searchByPartName(q);
@@ -193,6 +220,10 @@ public class Controller implements Initializable {
 
     }
 
+    /** This is the Method for the search product search text field. It uses {@link Inventory#searchByProductName(String)} as well as {@link Inventory#searchByProductID(int)} method located in the Inventory Class.
+     *
+     * @param actionEvent
+     */
     public void searchProduct(ActionEvent actionEvent) {
         String q = productSearchBar.getText();
         ObservableList<Product> search = Inventory.searchByProductName(q);
@@ -227,6 +258,10 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * This is the method that quits the application.
+     * @param actionEvent
+     */
     public void onQuit(ActionEvent actionEvent) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.initModality(Modality.NONE);
@@ -240,7 +275,10 @@ public class Controller implements Initializable {
 
     }
 
-
+    /**
+     * This is the method used to delete a part from the all parts array.
+     * @param actionEvent
+     */
     public void deletePart(ActionEvent actionEvent) {
         Part selectedPart = mainList.getSelectionModel().getSelectedItem();
         if (selectedPart == null) {
@@ -264,6 +302,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * This is a method to delete a Product from the allProducts Array
+     * @param actionEvent
+     */
     public void deleteProduct(ActionEvent actionEvent) {
         Product selectedProduct = prodMainView.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {

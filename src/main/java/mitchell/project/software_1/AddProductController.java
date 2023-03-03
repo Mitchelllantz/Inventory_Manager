@@ -1,7 +1,5 @@
 package mitchell.project.software_1;
-/**This is the class file for the controller of the add product page of the inventory app
- * @author Mitchell Lantz
- */
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +21,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**This is the class file for the controller of the add product page of the inventory app
+ * @author Mitchell Lantz
+ */
 public class AddProductController implements Initializable {
 
     public TextField addProdIDField;
@@ -49,7 +50,11 @@ public class AddProductController implements Initializable {
     ObservableList<Part> associatedPartsEmpty = FXCollections.observableArrayList();
     public static int lastId = 62000;
 
-
+    /**
+     * This is the initialize method used to set up all the tables for associated parts selection as well as generate the new id.
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lastId += 1000;
         String text = Integer.toString(lastId);
@@ -68,6 +73,11 @@ public class AddProductController implements Initializable {
         associatedPartsPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
     }
+
+    /**
+     * This method is called when the delete button is pressed in the associated parts table area. It will remove the associated part from the associated parts array that is displayed.
+     * @param actionEvent
+     */
     public void onRemoveAssociatedPartButton (ActionEvent actionEvent){
         Part selectedPart= (Part) addProductAsscPartsTable.getSelectionModel().getSelectedItem();
         if (selectedPart == null) {
@@ -88,8 +98,10 @@ public class AddProductController implements Initializable {
     }
 
 
-
-
+    /**This method is called when the add button is pressed in the associated parts table area. It adds the part that is selected in the {@link AddProductController#addProductPartsTable} array table to the {@link AddProductController#addProductAsscPartsTable} array.
+     *
+     * @param actionEvent
+     */
     public void onAddB(ActionEvent actionEvent) {
 
         Part selectedPart= (Part) addProductPartsTable.getSelectionModel().getSelectedItem();
@@ -108,7 +120,10 @@ public class AddProductController implements Initializable {
     }
 
 
-
+    /** This is the Method for the search product search text field. It uses {@link Inventory#searchByProductName(String)} as well as {@link Inventory#searchByProductID(int)} method located in the Inventory Class.
+     *
+     * @param actionEvent
+     */
     public void searchPart(ActionEvent actionEvent) {
         String q = addProductPartSearch.getText();
         ObservableList<Part> productQuery = Inventory.searchByPartName(q);
@@ -141,7 +156,11 @@ public class AddProductController implements Initializable {
 
 
     }
-
+    /**
+     * This is the method to return back to the main Inventory page of the application. A warning is presented before the user can go back. This method is re-used several times in the program.
+     * @param actionEvent
+     * @throws IOException
+     */
    @FXML
    private void back(ActionEvent actionEvent) throws IOException {
     Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -163,6 +182,12 @@ public class AddProductController implements Initializable {
 
         }
 
+    /** This is the save method that is invoked when the save button is pressed. It will add a product to the all Products static Observable list Array located in the Inventory Class
+     * All fields are data validated and will not allow the user to save empty fields or fields filled in with the incorrect data type.
+     * Product ID is auto generated and cannot be modified.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onSaveButton(ActionEvent actionEvent) throws IOException {
         String productNameS = addProdNameField.getText();
         String productPriceS = addProdPriceField.getText();

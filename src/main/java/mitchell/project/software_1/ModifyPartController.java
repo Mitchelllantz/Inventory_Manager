@@ -1,7 +1,5 @@
 package mitchell.project.software_1;
-/**This is the class file for the controller of the modify part page of the inventory app
- * @author Mitchell Lantz
- */
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +17,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**This is the class file for the controller of the modify part page of the inventory app
+ * @author Mitchell Lantz
+ */
 public class  ModifyPartController implements Initializable {
 
     @FXML
@@ -51,10 +52,21 @@ public class  ModifyPartController implements Initializable {
     public TextField modPartCompanyName;
     private static Part partData;
 
+    /**
+     * This method creates a static Part object that can be assigned to the object that was selected on the main
+     * inventory screen.
+     * @param part The Part is the selected part on the Observable List Array. All data for this part will be handed
+     *             over to this controller.
+     */
     public static void moveData(Part part){
         partData = part;
     }
-
+    /** This is the initialize method, it prepares the text fields by providing data from the static Part object that
+     * was handed by the main controller to the {@link ModifyPartController}
+     * The ID value is not editable as it was originally auto generated.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         modPartIdField.setText(String.valueOf(partData.getId()));
@@ -78,6 +90,11 @@ public class  ModifyPartController implements Initializable {
 
         }
     }
+     /**
+     * This is the method to toggle the labels and text fields for "Machine ID" and "Company Name" in relation to which
+      * radio button is selected in the toggle group.
+     * @param actionEvent
+     */
     public void toggleLabel(ActionEvent actionEvent) {
         if (radioButInHouse.isSelected()) {
             myLabel.setText("Machine ID");
@@ -91,6 +108,20 @@ public class  ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * This is the method that is invoked when the save button is pressed. ALl data in the fields is validated and will
+     * trigger an alert if left blank or filled with incorrect data types.
+     *  * <p><b>RUNTIME ERROR</b> When initially creating this controller, the ability to switch the radio buttons to different
+     * subclasses for the Part object was creating RUNTIME ERRORS because you cannot convert a subclass into a
+     * different subclass once the object is created. To remedy this error, I originally removed the radio button
+     * function all together as to not allow the user to convert the object. Later when running through the tests
+     * provided, I was made aware that this was a needed feature. To allow for this, I simply check if the object
+     * subclass is the same as what radio button is selected, and then create a new Object of the correct
+     * subclass while simultaneously removing the object with the previous subclass as to not allow duplicates if
+     *   not.</p>
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onModPart(ActionEvent actionEvent) throws IOException {
         String partIdS = modPartIdField.getText();
         String partNameS = modPartNameField.getText();
@@ -300,7 +331,11 @@ public class  ModifyPartController implements Initializable {
 
 
     }
-
+    /**
+     * This is the method to return back to the main Inventory page of the application. A warning is presented before the user can go back. This method is re-used several times in the program.
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
