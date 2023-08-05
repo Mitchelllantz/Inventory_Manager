@@ -1,3 +1,3 @@
 # Inventory_Manager
 
-This is a simple inventory management system written on Java using JavaFX.
+This is a simple inventory management system written in Java using JavaFX.
